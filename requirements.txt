@@ -1,4 +1,4 @@
-streamlit==1.7.0
+streamlit==1.8.0
 pandas
 plotly==5.1.0
 gsheetsdb==0.1.13.1

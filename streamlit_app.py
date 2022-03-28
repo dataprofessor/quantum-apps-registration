@@ -34,6 +34,7 @@ else:
 selected_language = st.sidebar.selectbox('Select a language', languages, index = language_value[0])
 st.session_state["language"] = selected_language
 
+@st.experimental_memo
 def t(text_input):
     translator = Translator()
     translation = translator.translate(text_input, dest=languages[selected_language])

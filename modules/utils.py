@@ -15,6 +15,7 @@ if "language" not in st.session_state:
 
 languages = { 'English': 'en', 'Spanish': 'es' }
 
+@st.experimental_memo
 def t(text_input):
     translator = Translator()
     translation = translator.translate(text_input, dest=languages[st.session_state["language"]])
