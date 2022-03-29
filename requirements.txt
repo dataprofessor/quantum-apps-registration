@@ -5,3 +5,4 @@ gsheetsdb==0.1.13.1
 gspread==5.2.0
 pytz
 googletrans==3.1.0a0
+click==8.0.4
