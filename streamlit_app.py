@@ -9,18 +9,14 @@ from datetime import datetime
 
 st.set_page_config(page_title="Quantum-Apps Hackathon", page_icon="⚛️")
 
-from modules import (
-    home,
-    register,
-    submit,
-    stats
-)
+from modules import home, register, submit, stats
+
 #################
 # Translation
 from googletrans import Translator, constants
 
 language_value = []
-languages = { 'English': 'en', 'Spanish': 'es' }
+languages = {"English": "en", "Spanish": "es"}
 
 if "language" not in st.session_state:
     st.session_state["language"] = "English"
@@ -31,15 +27,19 @@ else:
     language_value.append(1)
 
 
-selected_language = st.sidebar.selectbox('Select a language', languages, index = language_value[0])
+selected_language = st.sidebar.selectbox(
+    "Select a language", languages, index=language_value[0]
+)
 st.session_state["language"] = selected_language
+
 
 def t(text_input):
     translator = Translator()
     translation = translator.translate(text_input, dest=languages[selected_language])
     return translation.text
 
-#st.write('streamlit_app.py - ', f'selectbox: {selected_language}, ', f'Session state: {st.session_state["language"]}')
+
+# st.write('streamlit_app.py - ', f'selectbox: {selected_language}, ', f'Session state: {st.session_state["language"]}')
 
 #################
 
@@ -110,4 +110,3 @@ selected_page = st.sidebar.radio(
     on_change=change_page_url,
 )
 title_to_app[selected_page](rows)
-
