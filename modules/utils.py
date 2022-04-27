@@ -13,12 +13,16 @@ from googletrans import Translator, constants
 if "language" not in st.session_state:
     st.session_state["language"] = "English"
 
-languages = { 'English': 'en', 'Spanish': 'es' }
+languages = {"English": "en", "Spanish": "es"}
+
 
 def t(text_input):
     translator = Translator()
-    translation = translator.translate(text_input, dest=languages[st.session_state["language"]])
+    translation = translator.translate(
+        text_input, dest=languages[st.session_state["language"]]
+    )
     return translation.text
+
 
 #################
 
@@ -50,8 +54,10 @@ def update_team_member(x):
 def update_category(category_dict):
     st.session_state["category_index"] = category_dict[st.session_state.category]
 
+
 def disable_widgets():
     st.session_state["disabled"] = True
+
 
 def reset():
     for key in st.session_state.keys():
@@ -61,9 +67,22 @@ def reset():
 
 
 def submit_project(row, idx):
-    
-    github_url = st.text_input(t("Enter your GitHub repo URL"), disabled=st.session_state.disabled)
-    app_url = st.text_input(t("Enter your Streamlit Cloud app URL"), disabled=st.session_state.disabled)
+
+    github_url = st.text_input(
+        t("Enter your GitHub repo URL"), disabled=st.session_state.disabled
+    )
+    app_url = st.text_input(
+        t("Enter your Streamlit Cloud app URL"), disabled=st.session_state.disabled
+    )
+    video_url = st.text_input(
+        t(
+            "Enter a public link to a 3 min video (YouTube, Vimeo, Google Drive) showcasing your app"
+        ),
+        disabled=st.session_state.disabled,
+    )
+    abstract = st.text_area(
+        t("Enter the abstract for your project"), disabled=st.session_state.disabled
+    )
 
     if github_url and app_url:
         if "github.com" not in github_url:
@@ -84,6 +103,8 @@ def submit_project(row, idx):
             data.update(f"F{idx+2}", github_url)
             data.update(f"G{idx+2}", app_url)
             data.update(f"H{idx+2}", str(datetime.now(tz=pytz.utc)))
+            data.update(f"I{idx+2}", video_url)
+            data.update(f"J{idx+2}", abstract)
 
             st.success(t("Project submitted"))
             st.balloons()

@@ -23,12 +23,16 @@ from googletrans import Translator, constants
 if "language" not in st.session_state:
     st.session_state["language"] = "English"
 
-languages = { 'English': 'en', 'Spanish': 'es' }
+languages = {"English": "en", "Spanish": "es"}
+
 
 def t(text_input):
     translator = Translator()
-    translation = translator.translate(text_input, dest=languages[st.session_state["language"]])
+    translation = translator.translate(
+        text_input, dest=languages[st.session_state["language"]]
+    )
     return translation.text
+
 
 #################
 
@@ -45,13 +49,15 @@ def register_page(rows):
 
     st.subheader(t("Register your team here:"))
     st.write(
-        t("""Your team name cannot have any spaces, if you wish you can use an underscore (_) or
+        t(
+            """Your team name cannot have any spaces, if you wish you can use an underscore (_) or
     dash (-) to separate words.
 
 For example: if your team name is "The A team", **The_A_team** OR **The-A-team** are acceptable.
 
 If the team name you have chosen is taken already, please choose a different name to make sure there
-    there is no confusion when winners are announced! """)
+    there is no confusion when winners are announced! """
+        )
     )
 
     # choosing a team name
@@ -60,7 +66,7 @@ If the team name you have chosen is taken already, please choose a different nam
         value=st.session_state.team,
         key="team_name",
         on_change=update_team_name,
-        disabled=st.session_state.disabled
+        disabled=st.session_state.disabled,
     )
 
     if len(team_name) > 0:
@@ -82,13 +88,20 @@ If the team name you have chosen is taken already, please choose a different nam
         # if team name is valid, continue to making a password
         st.info(t("Team name available, please continue"))
         st.write(f"{t('You have chosen a team name of')}: **`{team_name}`**")
-        st.button(t("Continue with this team name?"), on_click=team_chosen, disabled=st.session_state.disabled)
+        st.button(
+            t("Continue with this team name?"),
+            on_click=team_chosen,
+            disabled=st.session_state.disabled,
+        )
 
     # create password for team
     if st.session_state["team_chosen"]:
         # password field
         pass_1 = st.text_input(
-            t("Team Password"), value=st.session_state.pwd, type="password", disabled=st.session_state.disabled
+            t("Team Password"),
+            value=st.session_state.pwd,
+            type="password",
+            disabled=st.session_state.disabled,
         )
         # double check that its not a typo
         pass_2 = st.text_input(
@@ -96,7 +109,7 @@ If the team name you have chosen is taken already, please choose a different nam
             value=st.session_state.pwd,
             type="password",
             key="password",
-            disabled=st.session_state.disabled
+            disabled=st.session_state.disabled,
         )
 
         if pass_1 and pass_2:
@@ -122,7 +135,7 @@ If the team name you have chosen is taken already, please choose a different nam
                 value=st.session_state.mentor,
                 key="mentor_name",
                 on_change=update_mentor,
-                disabled=st.session_state.disabled
+                disabled=st.session_state.disabled,
             )
 
         # a number input controls the number of text fields
@@ -133,7 +146,7 @@ If the team name you have chosen is taken already, please choose a different nam
             value=st.session_state.num_teams,
             key="team_count",
             on_change=update_team_count,
-            disabled=st.session_state.disabled
+            disabled=st.session_state.disabled,
         )
         st.write(t("Enter the full name of all participants on your team:"))
 
@@ -150,7 +163,7 @@ If the team name you have chosen is taken already, please choose a different nam
                 key=f"team_member_name_{x}",
                 on_change=update_team_member,
                 args=(x,),
-                disabled=st.session_state.disabled
+                disabled=st.session_state.disabled,
             )
             member_list.append(member)
 
@@ -170,7 +183,7 @@ If the team name you have chosen is taken already, please choose a different nam
             key="category",
             on_change=update_category,
             args=(category_dict,),
-            disabled=st.session_state.disabled
+            disabled=st.session_state.disabled,
         )
         st.write("---")
 
@@ -188,7 +201,11 @@ If the team name you have chosen is taken already, please choose a different nam
         if len(mentor_name) > 1:
             st.write(f"**{t('Mentor')}: `{st.session_state.mentor}`**")
 
-        submit = st.button(t("Confirm team entry"), on_click=team_chosen, disabled=st.session_state.disabled)
+        submit = st.button(
+            t("Confirm team entry"),
+            on_click=team_chosen,
+            disabled=st.session_state.disabled,
+        )
 
         if submit:
             # send to google sheet
@@ -228,4 +245,6 @@ If the team name you have chosen is taken already, please choose a different nam
                 on_click=reset,
             )
 
-            st.info(t("Please reload this page if you wish to make another registration"))
+            st.info(
+                t("Please reload this page if you wish to make another registration")
+            )

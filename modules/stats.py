@@ -8,12 +8,16 @@ from googletrans import Translator, constants
 if "language" not in st.session_state:
     st.session_state["language"] = "English"
 
-languages = { 'English': 'en', 'Spanish': 'es' }
+languages = {"English": "en", "Spanish": "es"}
+
 
 def t(text_input):
     translator = Translator()
-    translation = translator.translate(text_input, dest=languages[st.session_state["language"]])
+    translation = translator.translate(
+        text_input, dest=languages[st.session_state["language"]]
+    )
     return translation.text
+
 
 #################
 
@@ -41,8 +45,12 @@ def stats_page(rows):
         category[row.Category] += 1
         # st.write(row)
 
-    st.write(f"**{t('There are currently')} {team_number} {t('teams participating')}!** :tada:")
-    st.write(t("Lets take a look at some of the statistics of the teams participating!"))
+    st.write(
+        f"**{t('There are currently')} {team_number} {t('teams participating')}!** :tada:"
+    )
+    st.write(
+        t("Lets take a look at some of the statistics of the teams participating!")
+    )
 
     st.subheader(t("Distribution of Teams:"))
 
@@ -55,6 +63,8 @@ def stats_page(rows):
 
     st.subheader(t("Teams per Category:"))
     category_list = list(category.items())
-    df_category = pd.DataFrame(category_list, columns=[t("Category"), t("Number of Teams")])
+    df_category = pd.DataFrame(
+        category_list, columns=[t("Category"), t("Number of Teams")]
+    )
     fig = px.bar(df_category, x=t("Category"), y=t("Number of Teams"))
     st.plotly_chart(fig)
